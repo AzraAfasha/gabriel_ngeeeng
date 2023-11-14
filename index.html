@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Gabriel NGEEEENG</title>
+    <meta name="description" content="Hadiah Ulang Tahun Geby">
+    <meta name="keywords" content="Gabriel Ngeeeng">
+    <link rel="canonical" href="https://gabriel-ngeeeng.org" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <meta name="google-site-verification" content="uCMayYHqtOD8aEBNfptPFZn3qQliIFjghRvj_kPJFV8" />
+</head>
+
+<body>
+    <div id="content">
+        <h1>Geby Ngeeeeng</h1>
+        <hr id="subtitle-seperator" />
+        <h2>
+             Entar Ada Yang Lewat
+        </h2>
+        <div id="counter-container">
+            <p>Ngeeeeeng</p>
+            <br />
+            <br />
+            <p id="counter">0</p>
+            <br />
+            <br />
+            <p id="counter-times">Pencet Terus Bang</p>
+            <button id="counter-button" onclick="counterClick()">
+                Bang Pencet Bang hehe
+            </button>
+        </div>
+        <hr />
+        <div id="grid">
+            <noscript>Your browser does not support JavaScript or JavaScript has been
+                disabled.<br />This website relies on JavaScript, so please enable it
+                or use another browser.</noscript>
+        </div>
+    </div>
+    <div id="footer">
+        <img id="geby-kuru" loading="lazy" src="img/geby2.gif" alt="herta" />
+        <div id="footer-text">
+            <p>Geby Kuru Kuru Nya Pinjem yah bang :))</p>
+            <p>
+                <a href="https://twitter.com/FirmanAcker" target="_blank"><iconify-icon icon="mdi:twitter"
+                        id="twitter-footer-icon" class="footer-icon"></iconify-icon><span
+                        class="footer-icon-text">@FirmanAcker</span></a>
+            </p>
+            <p id="footer-repository-text">
+                Numpang Naruh disini yh bang hehe
+            </p>
+            <p>
+                <a href="https://www.youtube.com/@AfashaChannel" target="_blank"><iconify-icon icon="mdi:youtube"
+                        id="sosmed-footer-icon" class="footer-icon"></iconify-icon><span
+                        class="footer-icon-text">AFaSha Relvolt</span></a>
+            </p>
+            <p>
+                <a href="https://twitter.com/Azra_Relvolt" target="_blank"><iconify-icon icon="mdi:twitter"
+                        id="sosmed-footer-icon" class="footer-icon"></iconify-icon><span
+                        class="footer-icon-text">@Azra_relvolt</span></a>
+            </p>
+            
+        </div>
+    </div>
+    <script>
+    //varible
+    var audioList = [
+        new Audio("audio/gebi1.mp3"),
+        new Audio("audio/gebi2.mp3"),
+        new Audio("audio/gebi3.mp3"),
+        new Audio("audio/gebi4.mp3"),
+    ];
+
+    for (const audio of audioList) {
+        audio.preload = "auto";
+    }
+
+    var firstSquish = true;
+    //end varible
+
+    if (!localStorage.getItem("count")) {
+        localStorage.setItem("count", 0);
+    }
+
+    let temporaryCounter = parseInt(localStorage.getItem("count"));
+    const counterElement = document.getElementById("counter");
+    const counterTimesElement = document.getElementById("counter-times");
+    
+    displayCounter(temporaryCounter);
+
+    //counter button
+    function counterClick() {
+        ++temporaryCounter;
+        displayCounter(temporaryCounter);
+        localStorage.setItem("count", temporaryCounter);
+
+        playKuru();
+        animateHerta();
+    }
+    
+    function displayCounter(value) {
+        counterElement.innerText = value.toLocaleString();
+        counterTimesElement.innerText = value === 1 ? "Pencet Terus Bang" : "Pencet Terus Bang";
+    }
+
+    function playKuru() {
+        var audio;
+
+        if (firstSquish) {
+            firstSquish = false;
+            audio = audioList[0].cloneNode();
+        } else {
+            var random = Math.floor(Math.random() * 4) + 0;
+            audio = audioList[random].cloneNode();
+        }
+
+        audio.play();
+
+        audio.addEventListener("ended", function () {
+            this.remove();
+        });
+    }
+
+    function animateHerta() {
+        var counter_button = document.getElementById("counter-button");
+        var id = null;
+
+        var random = Math.floor(Math.random() * 3) + 1;
+        var elem = document.createElement("img");
+        elem.src = `img/geby${random}.webp`;
+        elem.style.position = "absolute";
+        elem.style.right = "-510px";
+        elem.style.width = "450px";
+        elem.style.top = counter_button.getClientRects()[0].bottom + scrollY - 365 + "px"
+        elem.style.zIndex = "-1";
+        document.body.appendChild(elem);
+
+        var pos = -510;
+        var limit = window.innerWidth + 510;
+        clearInterval(id);
+        id = setInterval(frame, 12);
+        function frame() {
+            if (pos >= limit) {
+                clearInterval(id);
+                elem.remove()
+            } else {
+                pos += 20;
+                elem.style.right = pos + 'px';
+            }
+        }
+    }
+    //end counter button
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then((registration) => {
+        console.log('Service Worker registered:', registration);
+      })
+      .catch((error) => {
+        console.log('Service Worker registration failed:', error);
+      });
+  }
+</script>
+</body>
+
+</html>
+
